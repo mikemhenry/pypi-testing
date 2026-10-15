@@ -37,10 +37,33 @@ jobs:
       - start-aws-runner
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      
       - name: Print disk usage
         run: "df -h"
+
       - name: Print Docker details
         run: "docker version || true"
+
+      - name: Print GPU details
+        run: "nvidia-smi"
+      
+      - name: Set up Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.14"
+
+      - name: Install OpenFF stack
+        run: |
+          pip install openff-toolkit openmm[cuda12] \
+          --index-url https://test.pypi.org/simple/ \
+          --extra-index-url https://pypi.org/simple
+
+      - name: Run test.py
+        run: python test.py
+
+      - name: Check Openmm
+        run: python -m openmm.testInstallation
+
   stop-aws-runner:
     runs-on: ubuntu-latest
     permissions:
