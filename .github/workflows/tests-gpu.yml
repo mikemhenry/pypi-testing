@@ -65,7 +65,7 @@ jobs:
         run: python -m openmm.testInstallation
 
       - name: Run gpu tests
-        run: OFE_INTEGRATION_TESTS=true python -m pytest --pyargs openfe openfecli -n 1 -vv --durations=10 -m integration
+        run: OFE_INTEGRATION_TESTS=true python -m pytest --pyargs openfe openfecli -vv --durations=10 -m integration
 
   stop-aws-runner:
     runs-on: ubuntu-latest
